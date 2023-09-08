@@ -104,8 +104,8 @@ INSERT INTO vencimento (cod_venc, nome, tipo, valor) VALUES (8, 'Salario Trabalh
 INSERT INTO vencimento (cod_venc, nome, tipo, valor) VALUES (9, 'Auxilio Salario Familia', 'V', 300);
 INSERT INTO vencimento (cod_venc, nome, tipo, valor) VALUES (10, 'Gratificacao Tempo de Servico', 'V', 350);
 INSERT INTO vencimento (cod_venc, nome, tipo, valor) VALUES (11, 'Insalubridade', 'V', 800);
-INSERT INTO vencimento (cod_venc, nome, tipo, valor) VALUES (12, 'Gratificacao por Titulacao', 'V', 2000);
-INSERT INTO vencimento (cod_venc, nome, tipo, valor) VALUES (13, 'Gratificacao por Titularidade', 'V', 800);
+INSERT INTO vencimento (cod_venc, nome, tipo, valor) VALUES (12, 'Gratificacao por Titulacao - Doutorado', 'V', 2000);
+INSERT INTO vencimento (cod_venc, nome, tipo, valor) VALUES (13, 'Gratificacao por Titularidade - Mestrado', 'V', 800);
 -- emp_venc
 INSERT INTO emp_venc (cod_venc, matr) VALUES (1, 27);
 INSERT INTO emp_venc (cod_venc, matr) VALUES (1, 88);
@@ -209,3 +209,14 @@ ALTER TABLE emp_desc
 ALTER TABLE desconto
     ADD CONSTRAINT pk_desconto_cod_desc PRIMARY KEY (cod_desc);
 
+ALTER TABLE emp_venc
+    ADD CONSTRAINT pk_emp_venc_cod_venc PRIMARY KEY (cod_venc),
+    ADD CONSTRAINT fk_emp_venc_cod_venc FOREIGN KEY (cod_venc) REFERENCES vencimento (cod_venc),
+    ADD CONSTRAINT pk_emp_venc_matr PRIMARY KEY (matr),
+    ADD CONSTRAINT fk_emp_venc_matr FOREIGN KEY (matr) REFERENCES empregado (matr);
+
+ALTER TABLE vencimento
+    ADD CONSTRAINT pk_vencimento_cod_venc (cod_venc);
+
+ALTER TABLE vencimento
+    ADD CONSTRAINT ak_vencimento_nome UNIQUE (nome);
