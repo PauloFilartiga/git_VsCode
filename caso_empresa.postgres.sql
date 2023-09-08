@@ -167,3 +167,45 @@ INSERT INTO emp_desc (cod_desc, matr) VALUES (92, 88);
 INSERT INTO emp_desc (cod_desc, matr) VALUES (92, 9999);
 
 
+--Adicionando a chave primária
+ALTER TABLE departamento
+    ADD CONSTRAINT pk_departamento PRIMARY KEY (cod_dep);
+
+--Adicionando a chave candidata (chave alternativa)
+ALTER TABLE departamento
+    ADD CONSTRAINT ak_deparatmento_nome UNIQUE (nome);
+
+ALTER TABLE divisao
+    ADD CONSTRAINT pk_divisao PRIMARY KEY (cod_divisao);
+
+--Adicionando a chave estrangeira
+ALTER TABLE divisao
+    ADD CONSTRAINT fk_divisao_cod_dep FOREIGN KEY (cod_dep) REFERENCES departamento (cod_dep);
+
+ALTER TABLE empregado
+    ADD CONSTRAINT pk_empregado PRIMARY KEY (matr);
+
+ALTER TABLE empregado
+    ADD CONSTRAINT fk_empregado_gerencia_cod_dep FOREIGN KEY (gerencia_cod_dep) REFERENCES departamento (cod_dep);
+
+ALTER TABLE empregado
+    ADD CONSTRAINT fk_empregado_gerencia_div FOREIGN KEY (gerencia_div) REFERENCES divisao (cod_divisao);
+
+ALTER TABLE dependente
+    ADD CONSTRAINT pk_dependente PRIMARY KEY (matr),
+    ADD CONSTRAINT fk_dependente_matr FOREIGN KEY (matr) REFERENCES empregado (matr);
+
+ALTER TABLE dependente
+    ADD CONSTRAINT pk_dependente_nome PRIMARY KEY (nome);
+
+ALTER TABLE emp_desc
+    ADD CONSTRAINT pk_emp_desc_cod_desc PRIMARY KEY (cod_desc),
+    ADD CONSTRAINT fk_emp_desc_cod_desc FOREIGN KEY (cod_desc) REFERENCES desconto (cod_desc);
+
+ALTER TABLE emp_desc
+    ADD CONSTRAINT pk_emp_desc_matr PRIMARY KEY (matr),
+    ADD CONSTRAINT fk_emp_desc_matr FOREIGN KEY (matr) REFERENCES empregado (matr);
+
+ALTER TABLE desconto
+    ADD CONSTRAINT pk_desconto_cod_desc PRIMARY KEY (cod_desc);
+
